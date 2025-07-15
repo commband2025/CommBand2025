@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { User, Phone, Mail, MapPin, AlertTriangle, QrCode, UserPlus, LogIn, Home, Camera, Upload } from 'lucide-react';
-import '../CSS/ProfileCard.css';
+import '../CSS/Profilecard.css';
 import QRCodeGenerator from './QrCodeGenerator';
 import CommunicationPhrases from './CommunicationPhrases';
 import SpeechToText from './SpeechToText';
