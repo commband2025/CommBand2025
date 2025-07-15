@@ -70,9 +70,9 @@ const Signup = ({ currentPath, navigate }) => {
   };
 
   const handleSubmit = () => {
-    // Basic validation
+    // Comprehensive validation for all required fields
     if (!formData.username || !formData.password || !formData.confirmPassword) {
-      alert('Please fill in all required fields');
+      alert('Please fill in all account credential fields');
       return;
     }
 
@@ -88,6 +88,25 @@ const Signup = ({ currentPath, navigate }) => {
 
     if (!formData.name || !formData.age || !formData.userType || !formData.preferredLanguage) {
       alert('Please fill in all personal information fields');
+      return;
+    }
+
+    // Validate emergency contact fields
+    if (!formData.emergencyContact.name || !formData.emergencyContact.relationship || !formData.emergencyContact.phone) {
+      alert('Please fill in all emergency contact fields');
+      return;
+    }
+
+    // Validate medical information fields
+    if (!formData.medicalInfo.condition || !formData.medicalInfo.allergies || !formData.medicalInfo.notes) {
+      alert('Please fill in all medical information fields');
+      return;
+    }
+
+    // Validate that all phrases are filled
+    const emptyPhrases = formData.phrases.filter(phrase => phrase.trim() === '');
+    if (emptyPhrases.length > 0) {
+      alert('Please fill in all communication phrases');
       return;
     }
 
@@ -115,16 +134,16 @@ const Signup = ({ currentPath, navigate }) => {
         email: formData.username, // Using username as email for login
         password: formData.password,
         emergencyContact: {
-          name: formData.emergencyContact.name || '',
-          relationship: formData.emergencyContact.relationship || '',
-          phone: formData.emergencyContact.phone || ''
+          name: formData.emergencyContact.name,
+          relationship: formData.emergencyContact.relationship,
+          phone: formData.emergencyContact.phone
         },
         medicalInfo: {
-          condition: formData.medicalInfo.condition || '',
-          allergies: formData.medicalInfo.allergies || 'None',
-          notes: formData.medicalInfo.notes || ''
+          condition: formData.medicalInfo.condition,
+          allergies: formData.medicalInfo.allergies,
+          notes: formData.medicalInfo.notes
         },
-        phrases: formData.phrases.filter(phrase => phrase.trim() !== ''), // Remove empty phrases
+        phrases: formData.phrases, // All phrases are now required
         photo: "/api/placeholder/150/150" // Default placeholder photo
       };
 
@@ -200,7 +219,7 @@ const Signup = ({ currentPath, navigate }) => {
               <h3 className="signup-section-title">Account Credentials</h3>
               <div className="signup-section-grid">
                 <div className="signup-field">
-                  <label className="signup-label">Username/Email</label>
+                  <label className="signup-label">Username/Email *</label>
                   <input
                     type="text"
                     name="username"
@@ -213,7 +232,7 @@ const Signup = ({ currentPath, navigate }) => {
                 </div>
 
                 <div className="signup-field">
-                  <label className="signup-label">Password</label>
+                  <label className="signup-label">Password *</label>
                   <input
                     type="password"
                     name="password"
@@ -227,7 +246,7 @@ const Signup = ({ currentPath, navigate }) => {
               </div>
 
               <div className="signup-field signup-field-full">
-                <label className="signup-label">Confirm Password</label>
+                <label className="signup-label">Confirm Password *</label>
                 <input
                   type="password"
                   name="confirmPassword"
@@ -245,7 +264,7 @@ const Signup = ({ currentPath, navigate }) => {
               <h3 className="signup-section-title">Personal Information</h3>
               <div className="signup-section-grid">
                 <div className="signup-field">
-                  <label className="signup-label">Name</label>
+                  <label className="signup-label">Name *</label>
                   <input
                     type="text"
                     name="name"
@@ -258,7 +277,7 @@ const Signup = ({ currentPath, navigate }) => {
                 </div>
 
                 <div className="signup-field">
-                  <label className="signup-label">Age</label>
+                  <label className="signup-label">Age *</label>
                   <input
                     type="number"
                     name="age"
@@ -273,7 +292,7 @@ const Signup = ({ currentPath, navigate }) => {
 
               <div className="signup-section-grid">
                 <div className="signup-field">
-                  <label className="signup-label">User Type</label>
+                  <label className="signup-label">User Type *</label>
                   <select
                     name="userType"
                     value={formData.userType}
@@ -289,7 +308,7 @@ const Signup = ({ currentPath, navigate }) => {
                 </div>
 
                 <div className="signup-field">
-                  <label className="signup-label">Preferred Language</label>
+                  <label className="signup-label">Preferred Language *</label>
                   <input
                     type="text"
                     name="preferredLanguage"
@@ -308,7 +327,7 @@ const Signup = ({ currentPath, navigate }) => {
               <h3 className="signup-section-title">Emergency Contact</h3>
               <div className="signup-section-grid">
                 <div className="signup-field">
-                  <label className="signup-label">Contact Name</label>
+                  <label className="signup-label">Contact Name *</label>
                   <input
                     type="text"
                     name="emergencyContact.name"
@@ -316,11 +335,12 @@ const Signup = ({ currentPath, navigate }) => {
                     onChange={handleInputChange}
                     className="signup-input"
                     placeholder="Emergency contact name"
+                    required
                   />
                 </div>
 
                 <div className="signup-field">
-                  <label className="signup-label">Relationship</label>
+                  <label className="signup-label">Relationship *</label>
                   <input
                     type="text"
                     name="emergencyContact.relationship"
@@ -328,12 +348,13 @@ const Signup = ({ currentPath, navigate }) => {
                     onChange={handleInputChange}
                     className="signup-input"
                     placeholder="e.g., Mother, Father, Spouse"
+                    required
                   />
                 </div>
               </div>
 
               <div className="signup-field signup-field-full">
-                <label className="signup-label">Phone Number</label>
+                <label className="signup-label">Phone Number *</label>
                 <input
                   type="tel"
                   name="emergencyContact.phone"
@@ -341,6 +362,7 @@ const Signup = ({ currentPath, navigate }) => {
                   onChange={handleInputChange}
                   className="signup-input"
                   placeholder="Emergency contact phone number"
+                  required
                 />
               </div>
             </div>
@@ -350,38 +372,41 @@ const Signup = ({ currentPath, navigate }) => {
               <h3 className="signup-section-title">Medical Information</h3>
               <div className="signup-section-grid">
                 <div className="signup-field">
-                  <label className="signup-label">Condition</label>
+                  <label className="signup-label">Condition *</label>
                   <input
                     type="text"
                     name="medicalInfo.condition"
                     value={formData.medicalInfo.condition}
                     onChange={handleInputChange}
                     className="signup-input"
-                    placeholder="Medical condition (if any)"
+                    placeholder="Medical condition (enter 'None' if none)"
+                    required
                   />
                 </div>
 
                 <div className="signup-field">
-                  <label className="signup-label">Allergies</label>
+                  <label className="signup-label">Allergies *</label>
                   <input
                     type="text"
                     name="medicalInfo.allergies"
                     value={formData.medicalInfo.allergies}
                     onChange={handleInputChange}
                     className="signup-input"
-                    placeholder="Known allergies (or 'None')"
+                    placeholder="Known allergies (enter 'None' if none)"
+                    required
                   />
                 </div>
               </div>
 
               <div className="signup-field signup-field-full">
-                <label className="signup-label">Additional Notes</label>
+                <label className="signup-label">Additional Notes *</label>
                 <textarea
                   name="medicalInfo.notes"
                   value={formData.medicalInfo.notes}
                   onChange={handleInputChange}
                   className="signup-textarea"
-                  placeholder="Any additional medical information..."
+                  placeholder="Any additional medical information (enter 'None' if none)..."
+                  required
                 />
               </div>
             </div>
@@ -392,13 +417,14 @@ const Signup = ({ currentPath, navigate }) => {
               <div className="signup-phrases">
                 {formData.phrases.map((phrase, index) => (
                   <div key={index} className="signup-phrase-field">
-                    <label className="signup-label">Phrase {index + 1}</label>
+                    <label className="signup-label">Phrase {index + 1} *</label>
                     <input
                       type="text"
                       value={phrase}
                       onChange={(e) => handlePhraseChange(index, e.target.value)}
                       className="signup-input"
                       placeholder={`Enter phrase ${index + 1}...`}
+                      required
                     />
                   </div>
                 ))}
