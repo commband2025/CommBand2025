@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { User, Phone, Mail, MapPin, AlertTriangle, QrCode, UserPlus, LogIn, Home, Camera, MessageSquare } from 'lucide-react';
-import '/src/CSS/SignUp.css'; 
+import '../CSS/SignUp.css'; 
 import ProfileCard from './ProfileCard';
 import ClearStorageButton from './ClearStorageButton';
 

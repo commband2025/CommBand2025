@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { User, Phone, Mail, MapPin, AlertTriangle, QrCode, UserPlus, LogIn, Home, Camera, Upload } from 'lucide-react';
-import '/src/CSS/ProfileCard.css';
-import QRCodeGenerator from '/src/Components/QrCodeGenerator';
-import CommunicationPhrases from '/src/Components/CommunicationPhrases';
-import SpeechToText from '/src/Components/SpeechToText';
+import '../CSS/ProfileCard.css';
+import QRCodeGenerator from './QrCodeGenerator';
+import CommunicationPhrases from './CommunicationPhrases';
+import SpeechToText from './SpeechToText';
 
 const ProfileCard = ({ user }) => {
   const [imageError, setImageError] = useState(false);

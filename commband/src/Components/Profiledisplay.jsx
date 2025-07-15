@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User, Phone, Mail, MapPin, AlertTriangle, QrCode, UserPlus, LogIn, Home, Camera, MessageSquare } from 'lucide-react';
-import '/src/CSS/ProfileDisplay.css';
-import ProfileCard from '/src/Components/ProfileCard';
+import '../CSS/ProfileDisplay.css';
+import ProfileCard from './ProfileCard';
 
 // Profile Display Component
 const loginIcon = "/COMMBAND_Icon.jpg";

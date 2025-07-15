@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MessageSquare, Volume2, Globe, AlertCircle, Edit3, Save, X, Plus, Trash2, Download, Upload } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import '/src/CSS/CommunicationPhrases.css';
+import '../CSS/CommunicationPhrases.css';
 
 const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en' ,apiKey = 'AIzaSyCpAB2SiD3Ck7w_7V03ApEN3ThEud-EH_c', userId = null }) => {
   const [selectedLanguage, setSelectedLanguage] = useState(userLanguage);
