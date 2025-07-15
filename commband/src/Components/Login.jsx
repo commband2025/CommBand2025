@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { User, Phone, Mail, MapPin, AlertTriangle, QrCode, UserPlus, LogIn, Home, Camera, MessageSquare } from 'lucide-react';
 import '/src/CSS/Login.css'; 
-import loginIcon from '../assets/COMMBAND_Icon.jpg';
-import liamImage from '../assets/liamImage.jpg';
-import MariaImage from '../assets/MariaImage.jpg';
+
 
 
 // Mock users data
+const loginIcon = "/COMMBAND_Icon.jpg";
+const MariaImage = "/MariaImage.jpg";
+const liamImage = "/liamImage.jpg";
 const mockUsers = [
   {
     id: 1,
@@ -32,7 +33,7 @@ const mockUsers = [
       "Please call my mom.",
       "I need to go to the toilet."
     ],
-    photo: liamImage
+    photo: "public/liamImage.jpg"
   },
   {
     id: 2,
@@ -58,7 +59,7 @@ const mockUsers = [
       "I need help finding the hospital.",
       "Please call my emergency contact."
     ],
-    photo: MariaImage
+    photo:"public/MariaImage.jpg"
   }
 ];
 

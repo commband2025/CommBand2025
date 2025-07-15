@@ -3,9 +3,10 @@ import { User, Phone, Mail, MapPin, AlertTriangle, QrCode, UserPlus, LogIn, Home
 import '/src/CSS/SignUp.css'; 
 import ProfileCard from './ProfileCard';
 import ClearStorageButton from './ClearStorageButton';
-import loginIcon from '../assets/COMMBAND_Icon.jpg';
+
 
 // Signup Component
+const loginIcon = "/COMMBAND_Icon.jpg";
 const Signup = ({ currentPath, navigate }) => {
   const [formData, setFormData] = useState({
     username: '',

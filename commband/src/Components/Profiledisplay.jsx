@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { User, Phone, Mail, MapPin, AlertTriangle, QrCode, UserPlus, LogIn, Home, Camera, MessageSquare } from 'lucide-react';
 import '/src/CSS/ProfileDisplay.css';
-import loginIcon from '../assets/COMMBAND_Icon.jpg';
 import ProfileCard from '/src/Components/ProfileCard';
 
 // Profile Display Component
+const loginIcon = "/COMMBAND_Icon.jpg";
 const ProfileDisplay = ({ currentPath, navigate, route, userId }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
