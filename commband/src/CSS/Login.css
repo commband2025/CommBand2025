@@ -1,0 +1,219 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.login-icon {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Login Component Specific Styles */
+.login-container {
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0fdf4; /* Very light mint background */
+  padding: 1rem;
+  position: relative;
+}
+
+.login-card {
+  background-color: #ffffff; /* White card background */
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 28rem;
+  position: relative;
+  z-index: 1;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+   /* Emerald green header */
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin: -2rem -2rem 2rem -2rem;
+}
+
+.login-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #ffffff; /* White text on green header */
+  margin: 0;
+}
+
+.login-subtitle {
+  color: #1a202c; /* White subtitle on green header */
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.login-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1a202c; /* Deep charcoal for labels */
+  margin-bottom: 0.5rem;
+}
+
+.login-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  color: #1a202c; /* Deep charcoal text */
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #14b8a6; /* Bright teal focus border */
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+}
+
+.login-error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0;
+}
+
+.login-button {
+  width: 100%;
+  background-color: #10b981; /* Emerald green button */
+  color: #ffffff; /* White text */
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.login-button:hover {
+  background-color: #059669; /* Darker emerald on hover */
+  transform: translateY(-1px);
+}
+
+.login-button:focus {
+  outline: 2px solid #10b981; /* Emerald focus outline */
+  outline-offset: 2px;
+}
+
+.login-button-icon {
+  margin-right: 0.5rem;
+  color: #ffffff; /* White icon */
+}
+
+.login-signup-section {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.login-signup-text {
+  color: #1a202c; /* Deep charcoal for signup text */
+  margin: 0;
+}
+
+.login-signup-link {
+  color: #14b8a6; /* Bright teal for signup link */
+  font-weight: 500;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: inherit;
+}
+
+.login-signup-link:hover {
+  color: #0f766e; /* Darker teal on hover */
+  text-decoration: underline;
+}
+
+.login-demo-credentials {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #f0fdf4; /* Very light mint for demo section */
+  border-radius: 0.5rem;
+  border: 1px solid #d1fae5; /* Light green border */
+}
+
+.login-demo-title {
+  font-size: 0.75rem;
+  color: #1a202c; /* Deep charcoal for demo title */
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.login-demo-list {
+  font-size: 0.75rem;
+  color: #374151; /* Darker gray for demo list */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.login-demo-list p {
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .login-container {
+    padding: 0.5rem;
+  }
+  
+  .login-card {
+    padding: 1.5rem;
+  }
+  
+  .login-title {
+    font-size: 1.5rem;
+  }
+  
+  .login-header {
+    margin: -1.5rem -1.5rem 2rem -1.5rem;
+  }
+}

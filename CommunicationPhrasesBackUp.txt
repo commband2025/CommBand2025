@@ -1,0 +1,166 @@
+import React, { useState, useEffect } from 'react';
+import { MessageSquare, Volume2, Globe } from 'lucide-react';
+
+const CommunicationPhrases = ({ phrases, userLanguage = 'en' }) => {
+  const [selectedLanguage, setSelectedLanguage] = useState(userLanguage);
+  const [translatedPhrases, setTranslatedPhrases] = useState(phrases);
+  const [isTranslating, setIsTranslating] = useState(false);
+
+  const languages = [
+    { code: 'en', name: 'English' },
+    { code: 'es', name: 'Spanish' },
+    { code: 'fr', name: 'French' },
+    { code: 'de', name: 'German' },
+    { code: 'tl', name: 'Filipino' }
+  ];
+
+  // Simple translation function (in a real app, you'd use a proper translation service)
+  const translateText = async (text, targetLanguage) => {
+    if (targetLanguage === 'en') return text;
+    
+    // Mock translation - in reality, you'd use Google Translate API or similar
+    const translations = {
+      'es': {
+        'I am non-verbal. Please scan my band.': 'Soy no verbal. Por favor escanee mi pulsera.',
+        'I am lost. Can you help me?': 'Estoy perdido. ¿Puedes ayudarme?',
+        'Please call my mom.': 'Por favor llama a mi mamá.',
+        'I need to go to the bus terminal.': 'Necesito ir a la terminal de autobuses.'
+      },
+      'fr': {
+        'I am non-verbal. Please scan my band.': 'Je suis non-verbal. Veuillez scanner mon bracelet.',
+        'I am lost. Can you help me?': 'Je suis perdu. Pouvez-vous m\'aider?',
+        'Please call my mom.': 'Appelez ma mère s\'il vous plaît.',
+        'I need to go to the bus terminal.': 'Je dois aller au terminal d\'autobus.'
+      },
+      'de': {
+        'I am non-verbal. Please scan my band.': 'Ich bin nicht verbal. Bitte scannen Sie mein Armband.',
+        'I am lost. Can you help me?': 'Ich bin verloren. Können Sie mir helfen?',
+        'Please call my mom.': 'Bitte rufen Sie meine Mutter an.',
+        'I need to go to the bus terminal.': 'Ich muss zum Busbahnhof.'
+      },
+      'tl': {
+        'I am non-verbal. Please scan my band.': 'Hindi ako nakakapagsalita. Pakiscan ang aking bracelet.',
+        'I am lost. Can you help me?': 'Naliligaw ako. Maari mo ba akong tulungan?',
+        'Please call my mom.': 'Pakitawagan ang aking nanay.',
+        'I need to go to the bus terminal.': 'Kailangan kong pumunta sa bus terminal.'
+      }
+    };
+
+    return translations[targetLanguage]?.[text] || text;
+  };
+
+  const handleLanguageChange = async (languageCode) => {
+    setSelectedLanguage(languageCode);
+    setIsTranslating(true);
+    
+    try {
+      const translated = await Promise.all(
+        phrases.map(phrase => translateText(phrase, languageCode))
+      );
+      setTranslatedPhrases(translated);
+    } catch (error) {
+      console.error('Translation error:', error);
+      setTranslatedPhrases(phrases);
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
+  const speakText = (text) => {
+    if ('speechSynthesis' in window) {
+      // Stop any ongoing speech
+      window.speechSynthesis.cancel();
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      
+      // Set voice based on selected language
+      const voices = window.speechSynthesis.getVoices();
+      const voice = voices.find(v => v.lang.startsWith(selectedLanguage)) || voices[0];
+      if (voice) {
+        utterance.voice = voice;
+      }
+      
+      utterance.lang = selectedLanguage;
+      utterance.rate = 0.8;
+      utterance.volume = 1;
+      
+      window.speechSynthesis.speak(utterance);
+    } else {
+      alert('Text-to-speech is not supported in this browser.');
+    }
+  };
+
+  const handlePhraseClick = (phrase) => {
+    speakText(phrase);
+  };
+
+  useEffect(() => {
+    // Load voices when component mounts
+    if ('speechSynthesis' in window) {
+      const loadVoices = () => {
+        window.speechSynthesis.getVoices();
+      };
+      
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+  }, []);
+
+  return (
+    <div className="section phrases-container">
+      <div className="phrases-header">
+        <h3 className="section-title">
+          <MessageSquare size={20} />
+          Pre-set Communication Phrases
+        </h3>
+        
+        <div className="language-selector">
+          <Globe size={16} />
+          <select 
+            value={selectedLanguage} 
+            onChange={(e) => handleLanguageChange(e.target.value)}
+            className="language-dropdown"
+            disabled={isTranslating}
+          >
+            {languages.map(lang => (
+              <option key={lang.code} value={lang.code}>
+                {lang.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      
+      <p className="phrases-hint">
+        <Volume2 size={16} />
+        Click any phrase to hear it spoken aloud
+      </p>
+      
+      <div className="phrases-list">
+        {isTranslating ? (
+          <div className="translation-loading">Translating...</div>
+        ) : (
+          translatedPhrases.map((phrase, index) => (
+            <div 
+              key={index} 
+              className="phrase clickable-phrase"
+              onClick={() => handlePhraseClick(phrase)}
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  handlePhraseClick(phrase);
+                }
+              }}
+            >
+              <Volume2 size={14} className="phrase-speaker-icon" />
+              {phrase}
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default CommunicationPhrases;

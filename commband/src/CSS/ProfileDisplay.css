@@ -1,0 +1,211 @@
+.logout-button {
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    background-color: #10b981; /* Teal-green to match other components */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    margin-left: 170px;
+
+}
+
+.logout-button:hover {
+    background-color: #059669; /* Darker teal on hover */
+}
+
+.logout-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #10b981; /* Teal focus ring */
+}
+
+.logout-button:active {
+    background-color: #047857; /* Even darker teal when active */
+}
+
+/* Container Styles */
+.profile-display-container {
+    min-height: 100vh;
+    background-color: #ffffff; /* White background to match login */
+    padding: 2rem 0;
+}
+
+.login-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.logout-div {
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.HeaderDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #10b981; /* Teal-green to match other components */
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow like login form */
+    margin-bottom: 2rem;
+}
+
+.UserProfileHeader {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff; /* White text on green background */
+    text-align: center;
+    margin-left: 1rem; /* Space between icon and text */
+}
+
+/* Medium screens (≥ 640px) */
+@media (min-width: 640px) {
+    .UserProfileHeader {
+        font-size: 1.875rem;
+    }
+}
+
+/* Large screens (≥ 1024px) */
+@media (min-width: 1024px) {
+    .UserProfileHeader {
+        font-size: 2.25rem;
+    }
+}
+
+.profile-display-wrapper {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header Styles */
+.profile-display-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.profile-display-logout-btn {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #10b981; /* Teal-green to match other components */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.profile-display-logout-btn:hover {
+    background-color: #059669; /* Darker teal on hover */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.profile-display-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+}
+
+/* Grid Layout */
+.profile-display-grid {
+    display: grid;
+    gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .profile-display-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Card-like styling for profile sections */
+.profile-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+}
+
+/* Loading and error states */
+.loading-container, .error-container {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid #e5e7eb;
+    border-top: 3px solid #10b981; /* Teal-green to match other components */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-button, .back-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #10b981; /* Teal-green to match other components */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    margin-top: 1rem;
+}
+
+.error-button:hover, .back-button:hover {
+    background-color: #059669; /* Darker teal on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+    .profile-display-container {
+        padding: 1rem 0;
+    }
+    
+    .profile-display-wrapper {
+        padding: 0 0.5rem;
+    }
+    
+    .profile-display-header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .profile-display-title {
+        font-size: 1.5rem;
+    }
+    
+    .profile-display-grid {
+        gap: 1.5rem;
+    }
+    
+    .HeaderDiv {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .UserProfileHeader {
+        margin-left: 0;
+        font-size: 1.25rem;
+    }
+}
