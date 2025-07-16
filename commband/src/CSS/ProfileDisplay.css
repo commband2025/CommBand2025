@@ -1,18 +1,97 @@
-.logout-button {
-    margin-bottom: 16px;
-    padding: 8px 16px;
-    background-color: #10b981; /* Teal-green to match other components */
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-    margin-left: 170px;
-
+/* Button Container for side-by-side layout */
+.buttons-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 1rem;
+  margin-left: 50px;
+  flex-wrap: wrap;
 }
 
+/* Change Password Button */
+.change-password-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: #10b981; /* Teal-green color */
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.875rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin: 0; /* Remove individual margins */
+}
+
+.change-password-button:hover {
+  background-color: #059669; /* Darker teal on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.change-password-button:focus {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}
+
+.change-password-button:active {
+  transform: translateY(0);
+}
+
+/* Logout Button */
+.logout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: #10b981; /* Teal-green to match other components */
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin: 0; /* Remove individual margins */
+}
+
+.logout-button:hover {
+  background-color: #059669; /* Darker teal on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.logout-button:focus {
+  outline: 2px solid #10b981; /* Teal focus ring */
+  outline-offset: 2px;
+}
+
+.logout-button:active {
+  background-color: #047857; /* Even darker teal when active */
+  transform: translateY(0);
+}
+
+/* Mobile Responsive - Stack buttons vertically on small screens */
+@media (max-width: 480px) {
+  .buttons-container {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .change-password-button,
+  .logout-button {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Rest of your existing CSS remains the same */
 .logout-button:hover {
     background-color: #059669; /* Darker teal on hover */
 }
@@ -208,4 +287,300 @@
         margin-left: 0;
         font-size: 1.25rem;
     }
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 28rem;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.modal-close-button {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.modal-close-button:hover {
+  color: #374151;
+  background-color: #f3f4f6;
+}
+
+.modal-body {
+  padding: 1rem 1.5rem;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Password Form Styles */
+.password-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.password-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  color: #1f2937;
+  background-color: #ffffff;
+}
+
+.password-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.password-input::placeholder {
+  color: #9ca3af;
+}
+
+.password-toggle-button {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: color 0.2s ease-in-out;
+}
+
+.password-toggle-button:hover {
+  color: #374151;
+}
+
+.password-toggle-button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Error and Success Messages */
+.password-error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.password-success {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #16a34a;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+/* Modal Buttons */
+.modal-cancel-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #ffffff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.875rem;
+}
+
+.modal-cancel-button:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.modal-cancel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modal-confirm-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #10b981;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.875rem;
+}
+
+.modal-confirm-button:hover {
+  background-color: #059669;
+}
+
+.modal-confirm-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 0.5rem;
+  }
+  
+  .modal-content {
+    max-width: 100%;
+    margin: 0;
+  }
+  
+  .modal-header {
+    padding: 1rem;
+  }
+  
+  .modal-body {
+    padding: 0.75rem 1rem;
+  }
+  
+  .modal-footer {
+    padding: 0.75rem 1rem 1rem 1rem;
+    flex-direction: column;
+  }
+  
+  .modal-cancel-button,
+  .modal-confirm-button {
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  .password-input {
+    padding: 1rem 3rem 1rem 1rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-title {
+    font-size: 1.125rem;
+  }
+  
+  .password-input {
+    padding: 0.875rem 2.5rem 0.875rem 0.875rem;
+  }
+  
+  .password-toggle-button {
+    right: 0.5rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .modal-content {
+    background-color: #1f2937;
+    color: #f9fafb;
+  }
+  
+  .modal-title {
+    color: #f9fafb;
+  }
+  
+  .modal-header {
+    border-bottom-color: #374151;
+  }
+  
+  .modal-footer {
+    border-top-color: #374151;
+  }
+  
+  .password-label {
+    color: #d1d5db;
+  }
+  
+  .password-input {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .password-input:focus {
+    border-color: #3b82f6;
+  }
+  
+  .password-toggle-button {
+    color: #9ca3af;
+  }
+  
+  .password-toggle-button:hover {
+    color: #d1d5db;
+  }
+  
+  .modal-cancel-button {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .modal-cancel-button:hover {
+    background-color: #4b5563;
+    border-color: #6b7280;
+  }
 }

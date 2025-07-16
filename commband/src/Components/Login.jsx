@@ -71,6 +71,13 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isChecking, setIsChecking] = useState(true);
 
+  // Function to clear all form fields
+  const clearFields = () => {
+    setEmail('');
+    setPassword('');
+    setError('');
+  };
+
   // Check if user is already logged in and initialize localStorage
   useEffect(() => {
     const checkAuthStatus = () => {
@@ -115,6 +122,11 @@ const Login = () => {
     }
   }, [location.pathname, navigate]);
 
+  // Clear fields when component mounts or location changes
+  useEffect(() => {
+    clearFields();
+  }, [location.pathname]);
+
   const handleLogin = () => {
     try {
       // Get users from localStorage
@@ -132,6 +144,8 @@ const Login = () => {
       if (user) {
         // Store current user session
         localStorage.setItem('currentUser', JSON.stringify(user));
+        // Clear fields before navigating
+        clearFields();
         navigate(`/profile/${user.id}`);
       } else {
         setError('Invalid credentials');
@@ -157,6 +171,12 @@ const Login = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     if (error) setError('');
+  };
+
+  // Handle sign up navigation with field clearing
+  const handleSignUpClick = () => {
+    clearFields();
+    navigate('/signup');
   };
 
   // Show loading state while checking authentication
@@ -195,6 +215,7 @@ const Login = () => {
               onKeyPress={handleKeyPress}
               placeholder="Enter your email"
               className="login-input"
+              autoComplete="email"
             />
           </div>
 
@@ -209,6 +230,7 @@ const Login = () => {
               onKeyPress={handleKeyPress}
               placeholder="Enter your password"
               className="login-input"
+              autoComplete="current-password"
             />
           </div>
 
@@ -231,7 +253,7 @@ const Login = () => {
           <p className="login-signup-text">
             Don't have an account?{' '}
             <button
-              onClick={() => navigate('/signup')}
+              onClick={handleSignUpClick}
               className="login-signup-link"
             >
               Sign up here
