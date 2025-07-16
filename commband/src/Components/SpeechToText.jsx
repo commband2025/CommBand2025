@@ -201,25 +201,27 @@ export default function SpeechToText() {
 
 const styles = {
   container: {
-    width: '700px',
-    height: '320px',
-    margin: '10px',
+    width: '100%',
+    maxWidth: '700px',
+    minHeight: '320px',
+    margin: '10px auto',
     padding: '8px',
     backgroundColor: '#f3f4f6',
-    fontFamily: 'system-ui, -apple-system, sans-serif'
+    fontFamily: 'system-ui, -apple-system, sans-serif',
+    boxSizing: 'border-box'
   },
   mainCard: {
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '16px',
     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-    height: '100%',
+    minHeight: '300px',
     display: 'flex',
     flexDirection: 'column',
     border: '1px solid #e5e7eb'
   },
   title: {
-    fontSize: '18px',
+    fontSize: 'clamp(16px, 4vw, 18px)',
     fontWeight: '600',
     color: '#374151',
     marginBottom: '12px',
@@ -234,7 +236,7 @@ const styles = {
   },
   micButton: {
     position: 'relative',
-    padding: '12px',
+    padding: 'clamp(10px, 3vw, 12px)',
     borderRadius: '50%',
     border: 'none',
     cursor: 'pointer',
@@ -265,7 +267,7 @@ const styles = {
     opacity: '0.3'
   },
   statusText: {
-    fontSize: '12px',
+    fontSize: 'clamp(11px, 2.5vw, 12px)',
     fontWeight: '500',
     textAlign: 'center'
   },
@@ -280,13 +282,13 @@ const styles = {
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
   },
   errorTitle: {
-    fontSize: '18px',
+    fontSize: 'clamp(16px, 4vw, 18px)',
     fontWeight: '600',
     color: '#991b1b',
     marginBottom: '12px'
   },
   errorText: {
-    fontSize: '14px',
+    fontSize: 'clamp(12px, 3vw, 14px)',
     color: '#dc2626'
   },
   errorDisplay: {
@@ -297,7 +299,7 @@ const styles = {
     borderRadius: '8px'
   },
   errorMessage: {
-    fontSize: '11px',
+    fontSize: 'clamp(10px, 2.5vw, 11px)',
     color: '#b91c1c',
     textAlign: 'center'
   },
@@ -305,8 +307,8 @@ const styles = {
     backgroundColor: '#f9fafb',
     borderRadius: '8px',
     padding: '12px',
-    minHeight: '100px',
-    maxHeight: '120px',
+    minHeight: 'clamp(80px, 20vh, 120px)',
+    maxHeight: 'clamp(100px, 25vh, 150px)',
     overflowY: 'auto',
     border: '1px solid #e5e7eb',
     flex: 1,
@@ -315,7 +317,7 @@ const styles = {
   transcriptContent: {
     color: '#374151',
     lineHeight: '1.4',
-    fontSize: '13px'
+    fontSize: 'clamp(12px, 3vw, 13px)'
   },
   finalText: {
     color: '#111827'
@@ -344,27 +346,29 @@ const styles = {
   },
   placeholderText: {
     margin: '0',
-    fontSize: '12px'
+    fontSize: 'clamp(11px, 2.5vw, 12px)'
   },
   actionButtons: {
     display: 'flex',
-    gap: '8px',
-    justifyContent: 'center'
+    gap: 'clamp(6px, 2vw, 8px)',
+    justifyContent: 'center',
+    flexWrap: 'wrap'
   },
   actionButton: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '8px',
+    padding: 'clamp(6px, 2vw, 8px)',
     borderRadius: '6px',
     border: 'none',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
-    fontSize: '12px',
+    fontSize: 'clamp(10px, 2.5vw, 12px)',
     fontWeight: '500',
-    minWidth: '70px',
-    height: '50px',
-    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)'
+    minWidth: 'clamp(60px, 15vw, 70px)',
+    height: 'clamp(40px, 10vw, 50px)',
+    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
+    flex: '1 1 auto'
   },
   copyButton: {
     backgroundColor: '#10b981',
@@ -395,7 +399,7 @@ const styles = {
   }
 };
 
-// CSS animations
+// CSS animations with media queries for responsiveness
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
   @keyframes pulse {
@@ -412,6 +416,42 @@ styleSheet.textContent = `
   @keyframes blink {
     0%, 50% { opacity: 1; }
     51%, 100% { opacity: 0; }
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 480px) {
+    .actionButtons {
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .actionButton {
+      width: 100%;
+      min-width: unset;
+    }
+    
+    .micButton {
+      padding: 14px;
+    }
+  }
+
+  /* Tablet optimizations */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .actionButtons {
+      gap: 10px;
+    }
+    
+    .actionButton {
+      flex: 1 1 calc(33.333% - 7px);
+      max-width: calc(33.333% - 7px);
+    }
+  }
+
+  /* Desktop optimizations */
+  @media (min-width: 769px) {
+    .actionButton {
+      flex: 0 1 auto;
+    }
   }
 `;
 document.head.appendChild(styleSheet);

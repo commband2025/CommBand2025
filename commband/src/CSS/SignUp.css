@@ -1,4 +1,16 @@
-/* Signup Component Specific Styles */
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
 
 /* Signup Container */
 .signup-container {
@@ -118,12 +130,44 @@
   border-radius: 0.5rem;
   font-size: 1rem;
   transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  color: #1a202c !important; /* Force dark text color */
+  background-color: #ffffff !important; /* Force white background */
+  -webkit-appearance: none; /* Remove iOS styling */
+  -moz-appearance: none; /* Remove Firefox styling */
+  appearance: none; /* Remove default styling - standard property */
+  font-family: inherit; /* Use system font */
 }
 
 .signup-input:focus {
   outline: none;
   border-color: #059669;
   box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+  color: #1a202c !important; /* Ensure text stays dark on focus */
+  background-color: #ffffff !important; /* Ensure background stays white on focus */
+}
+
+.signup-input:active {
+  color: #1a202c !important; /* Ensure text stays dark when active */
+  background-color: #ffffff !important; /* Ensure background stays white when active */
+}
+
+.signup-input::placeholder {
+  color: #6b7280; /* Gray placeholder text */
+  opacity: 1; /* Firefox placeholder opacity fix */
+}
+
+.signup-input::-webkit-input-placeholder {
+  color: #6b7280; /* Gray placeholder for webkit */
+}
+
+.signup-input::-moz-placeholder {
+  color: #6b7280; /* Gray placeholder for Firefox */
+  opacity: 1;
+}
+
+.signup-input:-ms-input-placeholder {
+  color: #6b7280; /* Gray placeholder for IE */
 }
 
 .signup-select {
@@ -133,13 +177,20 @@
   border-radius: 0.5rem;
   font-size: 1rem;
   transition: all 0.2s ease-in-out;
-  background-color: white;
+  background-color: #ffffff !important; /* Force white background */
+  color: #1a202c !important; /* Force dark text color */
+  -webkit-appearance: none; /* Remove iOS styling */
+  -moz-appearance: none; /* Remove Firefox styling */
+  appearance: none; /* Remove default styling - standard property */
+  font-family: inherit; /* Use system font */
 }
 
 .signup-select:focus {
   outline: none;
   border-color: #059669;
   box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+  color: #1a202c !important; /* Ensure text stays dark on focus */
+  background-color: #ffffff !important; /* Ensure background stays white on focus */
 }
 
 .signup-textarea {
@@ -151,12 +202,39 @@
   transition: all 0.2s ease-in-out;
   resize: vertical;
   min-height: 80px;
+  box-sizing: border-box;
+  color: #1a202c !important; /* Force dark text color */
+  background-color: #ffffff !important; /* Force white background */
+  -webkit-appearance: none; /* Remove iOS styling */
+  -moz-appearance: none; /* Remove Firefox styling */
+  appearance: none; /* Remove default styling - standard property */
+  font-family: inherit; /* Use system font */
 }
 
 .signup-textarea:focus {
   outline: none;
   border-color: #059669;
   box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+  color: #1a202c !important; /* Ensure text stays dark on focus */
+  background-color: #ffffff !important; /* Ensure background stays white on focus */
+}
+
+.signup-textarea::placeholder {
+  color: #6b7280; /* Gray placeholder text */
+  opacity: 1; /* Firefox placeholder opacity fix */
+}
+
+.signup-textarea::-webkit-input-placeholder {
+  color: #6b7280; /* Gray placeholder for webkit */
+}
+
+.signup-textarea::-moz-placeholder {
+  color: #6b7280; /* Gray placeholder for Firefox */
+  opacity: 1;
+}
+
+.signup-textarea:-ms-input-placeholder {
+  color: #6b7280; /* Gray placeholder for IE */
 }
 
 /* Phrases Section */
@@ -190,6 +268,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: inherit;
+  min-height: 44px; /* Minimum touch target */
 }
 
 .signup-btn-primary {
@@ -258,8 +338,65 @@
   margin-top: 2rem;
 }
 
-/* Responsive adjustments */
+/* Mobile-specific styles */
 @media (max-width: 768px) {
+  .signup-container {
+    padding: 1rem 0;
+  }
+  
+  .signup-wrapper {
+    padding: 0 0.5rem;
+  }
+  
+  .signup-card {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+  }
+  
+  .signup-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .login-icon {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .signup-title {
+    font-size: 1.5rem;
+  }
+  
+  .signup-subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .signup-section-title {
+    font-size: 1rem;
+  }
+  
+  .signup-input,
+  .signup-select,
+  .signup-textarea {
+    padding: 0.75rem 1rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 48px; /* Minimum touch target */
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+    border: 2px solid #d1d5db; /* Thicker border for better visibility */
+  }
+  
+  .signup-input:focus,
+  .signup-select:focus,
+  .signup-textarea:focus {
+    border-color: #059669;
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+  
+  .signup-textarea {
+    min-height: 100px;
+  }
+  
   .signup-actions {
     flex-direction: column;
     gap: 1rem;
@@ -267,5 +404,122 @@
   
   .signup-btn {
     width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    min-height: 48px; /* Minimum touch target */
+  }
+  
+  .signup-form {
+    gap: 1rem;
+  }
+  
+  .signup-section {
+    padding-top: 1rem;
+  }
+  
+  .signup-section-grid {
+    gap: 0.75rem;
+  }
+  
+  .signup-phrases {
+    gap: 0.5rem;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .signup-container {
+    padding: 0.5rem 0;
+  }
+  
+  .signup-wrapper {
+    padding: 0 0.25rem;
+  }
+  
+  .signup-card {
+    padding: 1rem;
+  }
+  
+  .login-icon {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .signup-title {
+    font-size: 1.25rem;
+  }
+  
+  .signup-input,
+  .signup-select,
+  .signup-textarea {
+    padding: 0.75rem;
+    font-size: 16px;
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+  
+  .signup-btn {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Dark mode support for mobile browsers */
+@media (prefers-color-scheme: dark) {
+  .signup-input,
+  .signup-select,
+  .signup-textarea {
+    color: #1a202c !important; /* Force dark text even in dark mode */
+    background-color: #ffffff !important; /* Force white background even in dark mode */
+  }
+  
+  .signup-input:focus,
+  .signup-select:focus,
+  .signup-textarea:focus {
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+}
+
+/* Additional iOS-specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .signup-input,
+  .signup-select,
+  .signup-textarea {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem; /* Standard property for compatibility */
+    appearance: none; /* Standard property for compatibility */
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+  
+  .signup-input:focus,
+  .signup-select:focus,
+  .signup-textarea:focus {
+    -webkit-appearance: none;
+    appearance: none; /* Standard property for compatibility */
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+}
+
+/* Android-specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .signup-input,
+  .signup-select,
+  .signup-textarea {
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .signup-input,
+  .signup-select,
+  .signup-textarea {
+    color: #1a202c !important;
+    background-color: #ffffff !important;
   }
 }
