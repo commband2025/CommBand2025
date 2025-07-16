@@ -15,6 +15,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Login Component Specific Styles */
@@ -43,7 +44,6 @@ html, body {
 .login-header {
   text-align: center;
   margin-bottom: 2rem;
-   /* Emerald green header */
   padding: 1.5rem;
   border-radius: 0.5rem;
   margin: -2rem -2rem 2rem -2rem;
@@ -57,7 +57,7 @@ html, body {
 }
 
 .login-subtitle {
-  color: #1a202c; /* White subtitle on green header */
+  color: #1a202c; /* Dark text for subtitle */
   font-size: 20px;
   font-weight: 700;
   margin-top: 0;
@@ -91,13 +91,43 @@ html, body {
   font-size: 1rem;
   transition: all 0.2s ease-in-out;
   box-sizing: border-box;
-  color: #1a202c; /* Deep charcoal text */
+  color: #1a202c !important; /* Force dark text color */
+  background-color: #ffffff !important; /* Force white background */
+  -webkit-appearance: none; /* Remove iOS styling */
+  -moz-appearance: none; /* Remove Firefox styling */
+  appearance: none; /* Remove default styling - standard property */
+  font-family: inherit; /* Use system font */
 }
 
 .login-input:focus {
   outline: none;
   border-color: #14b8a6; /* Bright teal focus border */
   box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+  color: #1a202c !important; /* Ensure text stays dark on focus */
+  background-color: #ffffff !important; /* Ensure background stays white on focus */
+}
+
+.login-input:active {
+  color: #1a202c !important; /* Ensure text stays dark when active */
+  background-color: #ffffff !important; /* Ensure background stays white when active */
+}
+
+.login-input::placeholder {
+  color: #6b7280; /* Gray placeholder text */
+  opacity: 1; /* Firefox placeholder opacity fix */
+}
+
+.login-input::-webkit-input-placeholder {
+  color: #6b7280; /* Gray placeholder for webkit */
+}
+
+.login-input::-moz-placeholder {
+  color: #6b7280; /* Gray placeholder for Firefox */
+  opacity: 1;
+}
+
+.login-input:-ms-input-placeholder {
+  color: #6b7280; /* Gray placeholder for IE */
 }
 
 .login-error {
@@ -126,6 +156,7 @@ html, body {
   justify-content: center;
   font-size: 1rem;
   box-sizing: border-box;
+  font-family: inherit;
 }
 
 .login-button:hover {
@@ -199,21 +230,148 @@ html, body {
   margin: 0;
 }
 
-/* Responsive adjustments */
-@media (max-width: 640px) {
+/* Mobile-specific styles */
+@media (max-width: 768px) {
   .login-container {
-    padding: 0.5rem;
+    padding: 1rem;
+    min-height: 100vh;
   }
   
   .login-card {
     padding: 1.5rem;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .login-header {
+    margin: -1.5rem -1.5rem 2rem -1.5rem;
+    padding: 1rem;
+  }
+  
+  .login-icon {
+    width: 150px;
+    height: 150px;
   }
   
   .login-title {
     font-size: 1.5rem;
   }
   
+  .login-subtitle {
+    font-size: 18px;
+  }
+  
+  .login-input {
+    padding: 1rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 48px; /* Minimum touch target */
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+    border: 2px solid #d1d5db; /* Thicker border for better visibility */
+  }
+  
+  .login-input:focus {
+    border-color: #14b8a6;
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+  
+  .login-button {
+    padding: 1rem;
+    font-size: 1rem;
+    min-height: 48px; /* Minimum touch target */
+  }
+  
+  .login-form {
+    gap: 1rem;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 0.5rem;
+  }
+  
+  .login-card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
   .login-header {
-    margin: -1.5rem -1.5rem 2rem -1.5rem;
+    margin: -1rem -1rem 1.5rem -1rem;
+    padding: 1rem;
+  }
+  
+  .login-icon {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .login-title {
+    font-size: 1.25rem;
+  }
+  
+  .login-subtitle {
+    font-size: 16px;
+  }
+  
+  .login-input {
+    padding: 0.875rem;
+    font-size: 16px;
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+  
+  .login-button {
+    padding: 0.875rem;
+  }
+}
+
+/* Dark mode support for mobile browsers */
+@media (prefers-color-scheme: dark) {
+  .login-input {
+    color: #1a202c !important; /* Force dark text even in dark mode */
+    background-color: #ffffff !important; /* Force white background even in dark mode */
+  }
+  
+  .login-input:focus {
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+}
+
+/* Additional iOS-specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .login-input {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem; /* Standard property for compatibility */
+    appearance: none; /* Standard property for compatibility */
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+  
+  .login-input:focus {
+    -webkit-appearance: none;
+    appearance: none; /* Standard property for compatibility */
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+}
+
+/* Android-specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .login-input {
+    color: #1a202c !important;
+    background-color: #ffffff !important;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .login-input {
+    color: #1a202c !important;
+    background-color: #ffffff !important;
   }
 }
