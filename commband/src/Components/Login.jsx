@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { User, Phone, Mail, MapPin, AlertTriangle, QrCode, UserPlus, LogIn, Home, Camera, MessageSquare } from 'lucide-react';
 import '../CSS/Login.css'; 
-
-
 
 // Mock users data
 const loginIcon = "/COMMBAND_Icon.jpg";
@@ -64,7 +63,9 @@ const mockUsers = [
 ];
 
 // Login Component
-const Login = ({ currentPath, navigate }) => {
+const Login = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -107,12 +108,12 @@ const Login = ({ currentPath, navigate }) => {
     };
 
     // Only check auth status if we're on the login page
-    if (currentPath === '/login') {
+    if (location.pathname === '/login') {
       checkAuthStatus();
     } else {
       setIsChecking(false);
     }
-  }, [currentPath, navigate]);
+  }, [location.pathname, navigate]);
 
   const handleLogin = () => {
     try {
@@ -157,9 +158,6 @@ const Login = ({ currentPath, navigate }) => {
     setPassword(e.target.value);
     if (error) setError('');
   };
-
-  // Don't render login form if not on login path
-  if (currentPath !== '/login') return null;
 
   // Show loading state while checking authentication
   if (isChecking) {

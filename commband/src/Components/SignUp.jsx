@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { User, Phone, Mail, MapPin, AlertTriangle, QrCode, UserPlus, LogIn, Home, Camera, MessageSquare } from 'lucide-react';
 import '../CSS/SignUp.css'; 
 import ProfileCard from './ProfileCard';
 import ClearStorageButton from './ClearStorageButton';
 
-
 // Signup Component
 const loginIcon = "/COMMBAND_Icon.jpg";
-const Signup = ({ currentPath, navigate }) => {
+const Signup = () => {
+  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -164,8 +166,6 @@ const Signup = ({ currentPath, navigate }) => {
       alert('Registration failed. Please try again.');
     }
   };
-
-  if (currentPath !== '/signup') return null;
 
   if (showQR) {
     return (

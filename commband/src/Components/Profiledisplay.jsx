@@ -1,29 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { User, Phone, Mail, MapPin, AlertTriangle, QrCode, UserPlus, LogIn, Home, Camera, MessageSquare } from 'lucide-react';
 import '../CSS/ProfileDisplay.css';
 import ProfileCard from './ProfileCard';
 
 // Profile Display Component
 const loginIcon = "/COMMBAND_Icon.jpg";
-const ProfileDisplay = ({ currentPath, navigate, route, userId }) => {
+const ProfileDisplay = () => {
+  const navigate = useNavigate();
+  const { userId } = useParams();
+  const location = useLocation();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Only run if we're on the profile route
-    if (route === '/profile' && userId) {
+    // Check if we have a userId parameter
+    if (userId) {
       console.log('Loading profile for user ID:', userId);
-      loadUserProfile(userId);
-    } else if (currentPath?.startsWith('/profile/')) {
-      // Fallback to extract userId from currentPath if route/userId not provided
-      const pathUserId = currentPath.split('/')[2];
+      loadUserProfile(parseInt(userId));
+    } else if (location.pathname.startsWith('/profile/')) {
+      // Fallback to extract userId from pathname
+      const pathUserId = location.pathname.split('/')[2];
       if (pathUserId) {
         console.log('Loading profile for user ID from path:', pathUserId);
         loadUserProfile(parseInt(pathUserId));
       }
+    } else {
+      // No userId provided, redirect to login
+      navigate('/login');
     }
-  }, [route, userId, currentPath]);
+  }, [userId, location.pathname, navigate]);
 
   const loadUserProfile = async (id) => {
     try {
@@ -77,9 +84,6 @@ const ProfileDisplay = ({ currentPath, navigate, route, userId }) => {
       navigate('/login');
     }
   };
-
-  // Only render if we're on the profile route
-  if (route !== '/profile' && !currentPath?.startsWith('/profile/')) return null;
 
   if (loading) {
     return (
