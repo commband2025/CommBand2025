@@ -32,7 +32,7 @@ const QRCodeGenerator = ({ data }) => {
     }
     
     if (user.id) {
-      formattedText += `\nProfile Link: comm-band2025-76il.vercel.app/profile/${user.id}\n`;
+      formattedText += `\nProfile Link: https://comm-band2025-76il.vercel.app/profile/${user.id}\n`;
     }
     
     return formattedText.trim();
