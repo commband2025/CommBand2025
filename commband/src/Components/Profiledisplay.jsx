@@ -43,10 +43,11 @@ const ProfileDisplay = () => {
         loadUserProfile(parseInt(pathUserId));
       }
     } else {
-      // No userId provided, redirect to login
-      navigate('/login');
+      // No userId provided, show error or default message
+      setLoading(false);
+      setError('No user ID provided');
     }
-  }, [userId, location.pathname, navigate]);
+  }, [userId, location.pathname]);
 
   const loadUserProfile = async (id) => {
     try {
@@ -253,10 +254,10 @@ const ProfileDisplay = () => {
           <h2 className="text-xl font-semibold text-red-600 mb-2">Error Loading Profile</h2>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
-            onClick={() => navigate('/login')}
+            onClick={() => window.location.reload()}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            Back to Login
+            Try Again
           </button>
         </div>
       </div>
@@ -270,10 +271,10 @@ const ProfileDisplay = () => {
           <User className="h-12 w-12 text-gray-400 mx-auto mb-4" />
           <p className="text-gray-600">No user data available</p>
           <button
-            onClick={() => navigate('/login')}
+            onClick={() => window.location.reload()}
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            Back to Login
+            Try Again
           </button>
         </div>
       </div>
