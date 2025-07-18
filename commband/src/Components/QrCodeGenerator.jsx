@@ -11,28 +11,9 @@ const QRCodeGenerator = ({ data }) => {
   // Format the user data as human-readable text instead of JSON
   const formatDataForQR = (user) => {
     let formattedText = '';
-    
-    if (user.name) formattedText += `Name: ${user.name}\n`;
-    if (user.age) formattedText += `Age: ${user.age}\n`;
-    if (user.userType) formattedText += `User Type: ${user.userType}\n`;
-    if (user.preferredLanguage) formattedText += `Preferred Language: ${user.preferredLanguage}\n`;
-    
-    if (user.emergencyContact) {
-      formattedText += `\nEmergency Contact:\n`;
-      if (user.emergencyContact.name) formattedText += `  Name: ${user.emergencyContact.name}\n`;
-      if (user.emergencyContact.relationship) formattedText += `  Relationship: ${user.emergencyContact.relationship}\n`;
-      if (user.emergencyContact.phone) formattedText += `  Phone: ${user.emergencyContact.phone}\n`;
-    }
-    
-    if (user.medicalInfo) {
-      formattedText += `\nMedical Information:\n`;
-      if (user.medicalInfo.condition) formattedText += `  Condition: ${user.medicalInfo.condition}\n`;
-      if (user.medicalInfo.allergies) formattedText += `  Allergies: ${user.medicalInfo.allergies}\n`;
-      if (user.medicalInfo.notes) formattedText += `  Notes: ${user.medicalInfo.notes}\n`;
-    }
-    
+  
     if (user.id) {
-      formattedText += `\nhttps://comm-band2025-76il.vercel.app/profile/${user.id}\n`;
+      formattedText += `https://comm-band2025-76il.vercel.app/profile/${user.id}`;
     }
     
     return formattedText.trim();
