@@ -5,6 +5,62 @@ import '../CSS/SignUp.css';
 import ProfileCard from './ProfileCard';
 import ClearStorageButton from './ClearStorageButton';
 
+// Mock users data - same as in Login component
+const mockUsers = [
+  {
+    id: 1,
+    name: "Liam Cruz",
+    age: 24,
+    userType: "PWD - Non-verbal User",
+    preferredLanguage: "English",
+    email: "liam@example.com",
+    password: "password",
+    emergencyContact: {
+      name: "Ana Cruz",
+      relationship: "Mother",
+      phone: "+63 912 345 6789"
+    },
+    medicalInfo: {
+      condition: "Autism Spectrum Disorder",
+      allergies: "None",
+      notes: "Avoid loud noises. May get overwhelmed in crowds."
+    },
+    phrases: [
+      "I am non-verbal. Please scan my band.",
+      "I am lost. Can you help me?",
+      "Please call my mom.",
+      "I need to go to the toilet."
+    ],
+    photo: "public/liamImage.jpg"
+  },
+  {
+    id: 2,
+    name: "Maria Santos",
+    age: 28,
+    userType: "Deaf User",
+    preferredLanguage: "Filipino Sign Language",
+    email: "tourist@example.com",
+    password: "password",
+    emergencyContact: {
+      name: "Juan Santos",
+      relationship: "Father",
+      phone: "+63 917 123 4567"
+    },
+    medicalInfo: {
+      condition: "Profound Hearing Loss",
+      allergies: "Penicillin",
+      notes: "Communicates primarily through sign language. Has cochlear implant."
+    },
+    phrases: [
+      "I am deaf. Please be patient.",
+      "Can you write it down?",
+      "I need help finding the hospital.",
+      "Please call my emergency contact."
+    ],
+    photo:"public/MariaImage.jpg"
+  }
+];
+
 // Signup Component
 const loginIcon = "/COMMBAND_Icon.jpg";
 const Signup = () => {
@@ -33,6 +89,14 @@ const Signup = () => {
 
   const [showQR, setShowQR] = useState(false);
   const [newUser, setNewUser] = useState(null);
+
+  // Initialize localStorage with mock users if not present
+  useEffect(() => {
+    const storedUsers = localStorage.getItem('translatorAppUsers');
+    if (!storedUsers) {
+      localStorage.setItem('translatorAppUsers', JSON.stringify(mockUsers));
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

@@ -1,20 +1,84 @@
 import React, { useState } from 'react';
 
+// Mock users data - same as in your Login and Signup components
+const mockUsers = [
+  {
+    id: 1,
+    name: "Liam Cruz",
+    age: 24,
+    userType: "PWD - Non-verbal User",
+    preferredLanguage: "English",
+    email: "liam@example.com",
+    password: "password",
+    emergencyContact: {
+      name: "Ana Cruz",
+      relationship: "Mother",
+      phone: "+63 912 345 6789"
+    },
+    medicalInfo: {
+      condition: "Autism Spectrum Disorder",
+      allergies: "None",
+      notes: "Avoid loud noises. May get overwhelmed in crowds."
+    },
+    phrases: [
+      "I am non-verbal. Please scan my band.",
+      "I am lost. Can you help me?",
+      "Please call my mom.",
+      "I need to go to the toilet."
+    ],
+    photo: "public/liamImage.jpg"
+  },
+  {
+    id: 2,
+    name: "Maria Santos",
+    age: 28,
+    userType: "Deaf User",
+    preferredLanguage: "Filipino Sign Language",
+    email: "tourist@example.com",
+    password: "password",
+    emergencyContact: {
+      name: "Juan Santos",
+      relationship: "Father",
+      phone: "+63 917 123 4567"
+    },
+    medicalInfo: {
+      condition: "Profound Hearing Loss",
+      allergies: "Penicillin",
+      notes: "Communicates primarily through sign language. Has cochlear implant."
+    },
+    phrases: [
+      "I am deaf. Please be patient.",
+      "Can you write it down?",
+      "I need help finding the hospital.",
+      "Please call my emergency contact."
+    ],
+    photo:"public/MariaImage.jpg"
+  }
+];
+
 const ClearStorageButton = () => {
   const [isCleared, setIsCleared] = useState(false);
 
   const handleClearStorage = () => {
-    // In a real environment, this would be:
-     localStorage.removeItem('translatorAppUsers');
-    
-    // For demonstration in this environment:
-    console.log('localStorage.removeItem("translatorAppUsers") would be called');
-    setIsCleared(true);
-    
-    // Reset the state after 2 seconds
-    setTimeout(() => {
-      setIsCleared(false);
-    }, 2000);
+    try {
+      // Clear the localStorage data
+      localStorage.removeItem('translatorAppUsers');
+      localStorage.removeItem('currentUser');
+      
+      // Reinitialize with mock data
+      localStorage.setItem('translatorAppUsers', JSON.stringify(mockUsers));
+      
+      console.log('localStorage cleared and reinitialized with mock data');
+      setIsCleared(true);
+      
+      // Reset the state after 2 seconds
+      setTimeout(() => {
+        setIsCleared(false);
+      }, 2000);
+    } catch (error) {
+      console.error('Error clearing/reinitializing storage:', error);
+      alert('Error clearing storage. Please try again.');
+    }
   };
 
   return (
@@ -35,7 +99,7 @@ const ClearStorageButton = () => {
           }
         }}
       >
-        {isCleared ? 'Cleared!' : 'Clear Storage'}
+        {isCleared ? 'Cleared & Reset!' : 'Clear Storage'}
       </button>
     </div>
   );
@@ -43,7 +107,6 @@ const ClearStorageButton = () => {
 
 const containerStyle = {
   display: 'flex',
- 
   alignItems: 'center',
   minHeight: '50px',
   padding: '10px',

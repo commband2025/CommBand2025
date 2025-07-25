@@ -40,7 +40,7 @@ const mockUsers = [
     age: 28,
     userType: "Deaf User",
     preferredLanguage: "Filipino Sign Language",
-    email: "maria@example.com",
+    email: "tourist@example.com",
     password: "password",
     emergencyContact: {
       name: "Juan Santos",

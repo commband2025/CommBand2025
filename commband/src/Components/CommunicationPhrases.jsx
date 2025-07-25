@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { MessageSquare, Volume2, Globe, AlertCircle, Edit3, Save, X, Plus, Trash2, Download, Upload } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import '../CSS/CommunicationPhrases.css';
+import '/src/CSS/CommunicationPhrases.css';
 
-const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en' ,apiKey = 'AIzaSyCpAB2SiD3Ck7w_7V03ApEN3ThEud-EH_c', userId = null }) => {
+const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en' ,apiKey = 'AIzaSyDJPYfUcJYwfnN2QIjoVxoeOC1RoB-ok08', userId = null }) => {
   const [selectedLanguage, setSelectedLanguage] = useState(userLanguage);
   const [phrases, setPhrases] = useState(initialPhrases);
+  const [originalPhrases, setOriginalPhrases] = useState(initialPhrases); // Store original English phrases
   const [translatedPhrases, setTranslatedPhrases] = useState([]);
   const [isTranslating, setIsTranslating] = useState(false);
   const [translationError, setTranslationError] = useState(null);
@@ -31,7 +32,7 @@ const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en
 
   const languages = [
     { code: 'en', name: 'English' },
-    { code: 'es', name: 'Spanish' },
+   
     { code: 'fr', name: 'French' },
     { code: 'de', name: 'German' },
     { code: 'it', name: 'Italian' },
@@ -46,7 +47,7 @@ const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en
   ];
 
   // Function to save phrases to localStorage (update user's phrases in translatorAppUsers)
-  const savePhrases = (newPhrases) => {
+  const savePhrases = (newPhrases, newOriginalPhrases = null) => {
     try {
       // Get current user to determine which user's phrases to update
       const currentUser = localStorage.getItem(CURRENT_USER_KEY);
@@ -64,7 +65,11 @@ const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en
       // Find and update the specific user's phrases
       const updatedUsers = users.map(u => {
         if (u.id === targetUserId) {
-          return { ...u, phrases: newPhrases };
+          const updatedUser = { ...u, phrases: newPhrases };
+          if (newOriginalPhrases) {
+            updatedUser.originalPhrases = newOriginalPhrases;
+          }
+          return updatedUser;
         }
         return u;
       });
@@ -75,6 +80,9 @@ const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en
       // Update current user session if it's the current user being updated
       if (targetUserId === user.id) {
         const updatedCurrentUser = { ...user, phrases: newPhrases };
+        if (newOriginalPhrases) {
+          updatedCurrentUser.originalPhrases = newOriginalPhrases;
+        }
         localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedCurrentUser));
       }
       
@@ -88,24 +96,30 @@ const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en
     try {
       // Get current user to determine which user's phrases to load
       const currentUser = localStorage.getItem(CURRENT_USER_KEY);
-      if (!currentUser) return [];
+      if (!currentUser) return { phrases: [], originalPhrases: [] };
       
       const user = JSON.parse(currentUser);
       const targetUserId = userId || user.id;
       
       // Get all users from localStorage
       const storedUsers = localStorage.getItem(USERS_STORAGE_KEY);
-      if (!storedUsers) return [];
+      if (!storedUsers) return { phrases: [], originalPhrases: [] };
       
       const users = JSON.parse(storedUsers);
       
       // Find the specific user and return their phrases
       const targetUser = users.find(u => u.id === targetUserId);
-      return targetUser ? targetUser.phrases || [] : [];
+      if (targetUser) {
+        return {
+          phrases: targetUser.phrases || [],
+          originalPhrases: targetUser.originalPhrases || targetUser.phrases || []
+        };
+      }
+      return { phrases: [], originalPhrases: [] };
       
     } catch (error) {
       console.error('Error loading phrases from localStorage:', error);
-      return [];
+      return { phrases: [], originalPhrases: [] };
     }
   };
 
@@ -130,26 +144,26 @@ const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en
 
   // Load phrases from localStorage on component mount, fallback to props
   useEffect(() => {
-    const storedPhrases = loadPhrases();
+    const { phrases: storedPhrases, originalPhrases: storedOriginalPhrases } = loadPhrases();
     if (storedPhrases.length > 0) {
       setPhrases(storedPhrases);
+      setOriginalPhrases(storedOriginalPhrases);
     } else {
       setPhrases(initialPhrases);
+      setOriginalPhrases(initialPhrases); // Assume initial phrases are in English
     }
   }, [initialPhrases]);
 
   // Reset translations when phrases change
   useEffect(() => {
     setTranslatedPhrases([]);
-    if (selectedLanguage !== 'en' && isConfigured) {
+    if (isConfigured) {
       handleLanguageChange(selectedLanguage);
     }
-  }, [phrases, isConfigured]);
+  }, [originalPhrases, isConfigured]); // Use originalPhrases instead of phrases
 
-  // Enhanced translation function with model fallback
+  // Enhanced translation function with model fallback - ALWAYS translates via API
   const translateText = async (text, targetLanguage, sourceLanguage = 'en') => {
-    if (targetLanguage === sourceLanguage) return text;
-    
     if (!genAI) {
       throw new Error('Gemini AI is not configured. Please provide an API key.');
     }
@@ -157,7 +171,12 @@ const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en
     const targetLanguageName = languages.find(lang => lang.code === targetLanguage)?.name || targetLanguage;
     const sourceLanguageName = languages.find(lang => lang.code === sourceLanguage)?.name || sourceLanguage;
 
-    const prompt = `Translate the following text from ${sourceLanguageName} to ${targetLanguageName}. Only return the translated text, nothing else:
+    // Always use API, even for same language (could be for formatting, standardization, etc.)
+    const prompt = targetLanguage === sourceLanguage 
+      ? `Please reformat and standardize the following text in ${targetLanguageName}, ensuring proper grammar and clarity. Only return the text, nothing else:
+
+"${text}"`
+      : `Translate the following text from ${sourceLanguageName} to ${targetLanguageName}. Only return the translated text, nothing else:
 
 "${text}"`;
 
@@ -231,10 +250,8 @@ const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en
     }
   };
 
-  // Enhanced batch translate with model fallback
+  // Enhanced batch translate with model fallback - ALWAYS translates via API
   const translateMultipleTexts = async (texts, targetLanguage, sourceLanguage = 'en') => {
-    if (targetLanguage === sourceLanguage) return texts;
-    
     if (!genAI) {
       throw new Error('Gemini AI is not configured. Please provide an API key.');
     }
@@ -244,7 +261,12 @@ const CommunicationPhrases = ({ phrases: initialPhrases = [], userLanguage = 'en
 
     const numberedTexts = texts.map((text, index) => `${index + 1}. "${text}"`).join('\n');
     
-    const prompt = `Translate the following numbered phrases from ${sourceLanguageName} to ${targetLanguageName}. Return only the translated phrases in the same numbered format, nothing else:
+    // Always use API, even for same language
+    const prompt = targetLanguage === sourceLanguage
+      ? `Please reformat and standardize the following numbered phrases in ${targetLanguageName}, ensuring proper grammar and clarity. Return only the phrases in the same numbered format, nothing else:
+
+${numberedTexts}`
+      : `Translate the following numbered phrases from ${sourceLanguageName} to ${targetLanguageName}. Return only the translated phrases in the same numbered format, nothing else:
 
 ${numberedTexts}`;
 
@@ -340,7 +362,7 @@ ${numberedTexts}`;
     setTranslationError(null);
     
     try {
-      const translated = await translateMultipleTexts(phrases, languageCode);
+      const translated = await translateMultipleTexts(originalPhrases, languageCode); // Always translate from original English phrases
       setTranslatedPhrases(translated);
     } catch (error) {
       console.error('Translation error:', error);
@@ -386,10 +408,18 @@ ${numberedTexts}`;
 
   const saveEdit = () => {
     if (editingText.trim()) {
-      const newPhrases = [...phrases];
-      newPhrases[editingIndex] = editingText.trim();
-      setPhrases(newPhrases);
-      savePhrases(newPhrases); // Save to localStorage
+      const newOriginalPhrases = [...originalPhrases];
+      newOriginalPhrases[editingIndex] = editingText.trim();
+      setOriginalPhrases(newOriginalPhrases);
+      
+      // If we're currently in English, update phrases too
+      if (selectedLanguage === 'en') {
+        const newPhrases = [...phrases];
+        newPhrases[editingIndex] = editingText.trim();
+        setPhrases(newPhrases);
+      }
+      
+      savePhrases(newOriginalPhrases, newOriginalPhrases); // Save both as original phrases
     }
     setEditingIndex(null);
     setEditingText('');
@@ -401,16 +431,52 @@ ${numberedTexts}`;
   };
 
   const deletePhrase = (index) => {
+    const newOriginalPhrases = originalPhrases.filter((_, i) => i !== index);
     const newPhrases = phrases.filter((_, i) => i !== index);
+    
+    // Also update translated phrases if they exist
+    if (translatedPhrases.length > 0) {
+      const newTranslatedPhrases = translatedPhrases.filter((_, i) => i !== index);
+      setTranslatedPhrases(newTranslatedPhrases);
+    }
+    
+    setOriginalPhrases(newOriginalPhrases);
     setPhrases(newPhrases);
-    savePhrases(newPhrases); // Save to localStorage
+    savePhrases(newOriginalPhrases, newOriginalPhrases); // Save to localStorage
   };
 
-  const addNewPhrase = () => {
+  const addNewPhrase = async () => {
     if (newPhraseText.trim()) {
-      const newPhrases = [...phrases, newPhraseText.trim()];
+      let englishPhrase = newPhraseText.trim();
+      
+      // If we're currently viewing in a non-English language, assume the user entered the phrase in that language
+      // and translate it back to English first to store as the original phrase
+      if (selectedLanguage !== 'en' && isConfigured) {
+        try {
+          setIsTranslating(true);
+          // Translate the entered phrase from current language to English for storage
+          englishPhrase = await translateText(newPhraseText.trim(), 'en', selectedLanguage);
+        } catch (error) {
+          console.error('Error translating new phrase to English:', error);
+          setTranslationError(`Failed to translate new phrase to English: ${error.message}`);
+          // Fallback: use the original text as English
+          englishPhrase = newPhraseText.trim();
+        }
+      }
+      
+      const newOriginalPhrases = [...originalPhrases, englishPhrase];
+      const newPhrases = [...phrases, englishPhrase];
+      setOriginalPhrases(newOriginalPhrases);
       setPhrases(newPhrases);
-      savePhrases(newPhrases); // Save to localStorage
+      savePhrases(newOriginalPhrases, newOriginalPhrases); // Save to localStorage
+      
+      // If we're not in English mode, add the user's entered phrase directly to translated phrases
+      if (selectedLanguage !== 'en') {
+        const newTranslatedPhrases = [...translatedPhrases, newPhraseText.trim()];
+        setTranslatedPhrases(newTranslatedPhrases);
+        setIsTranslating(false);
+      }
+      
       setNewPhraseText('');
       setIsAddingNew(false);
     }
@@ -558,7 +624,7 @@ ${numberedTexts}`;
                       {phrase}
                     </span>
                     <button
-                      onClick={() => startEditing(index, phrases[index])}
+                      onClick={() => startEditing(index, originalPhrases[index])} // Edit the original English phrase
                       style={{ padding: '6px', backgroundColor: '#20b2aa', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer'  }}
                     >
                       <Edit3 size={16} />
