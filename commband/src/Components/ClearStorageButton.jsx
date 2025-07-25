@@ -30,27 +30,27 @@ const mockUsers = [
   },
   {
     id: 2,
-    name: "Maria Santos",
-    age: 28,
-    userType: "Deaf User",
-    preferredLanguage: "Filipino Sign Language",
+    name: "Vince Dela Cruz",
+    age: 23,
+    userType: "Able/Tourist",
+    preferredLanguage: "English",
     email: "tourist@example.com",
     password: "password",
     emergencyContact: {
-      name: "Juan Santos",
+      name: "Efren Dela Cruz",
       relationship: "Father",
-      phone: "+63 917 123 4567"
+      phone: "09059649245"
     },
     medicalInfo: {
-      condition: "Profound Hearing Loss",
-      allergies: "Penicillin",
-      notes: "Communicates primarily through sign language. Has cochlear implant."
+      condition: "None",
+      allergies: "Shrimp",
+      notes: "None"
     },
     phrases: [
-      "I am deaf. Please be patient.",
-      "Can you write it down?",
-      "I need help finding the hospital.",
-      "Please call my emergency contact."
+      "Hi Good Morning",
+      "Can you tell me where is the nearest bus station?",
+      "Your welcome",
+      "Thank You!"
     ],
     photo:"public/MariaImage.jpg"
   }
